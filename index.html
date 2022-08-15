@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      body {
+        background: #ffffff;
+      }
+
+      .wrapper {
+        padding: 2rem;
+      }
+
+      .audio-wrapper {
+        margin: 0 0 2rem 0;
+      }
+
+      .audio {
+        width: 100%;
+        background-color: white;
+      }
+      .toolbar {
+        text-align: center
+      }
+
+      .button {
+        transition: all .4s ease-in-out;
+        
+        position: inline-block;
+        padding: .6rem 1rem;
+        
+        background: white;
+        
+        border: 1px solid grey;
+        border-radius: 0;
+        outline: none;
+        
+        text-transform: uppercase;
+        color:grey;
+      }
+      .button:hover {
+          background: green;
+          
+          border-color: darkolivegreen;
+          
+          color: white;
+        }
+        
+    </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="audio-wrapper">
+      <audio src="" controls class="js-audio audio"></audio>
+    </div>
+  
+    <div class="toolbar">
+      <button class="js-start button button--start">Start</button>
+      <button class="js-stop button button--stop">Stop</button>
+    </div>
+  </div>
+</body>
+<script>
+  // We'll save all chunks of audio in this array.
+const chunks = [];
+
+// We will set this to our MediaRecorder instance later.
+let recorder = null;
+
+// We'll save some html elements here once the page has loaded.
+let audioElement = null;
+let startButton = null;
+let stopButton = null;
+
+/**
+ * Save a new chunk of audio.
+ * @param  {MediaRecorderEvent} event 
+ */
+const saveChunkToRecording = (event) => {
+    chunks.push(event.data);
+};
+
+/**
+ * Save the recording as a data-url.
+ * @return {[type]}       [description]
+ */
+const saveRecording = () => {
+    const blob = new Blob(chunks, {
+        type: 'audio/mp4; codecs=opus'
+    });
+    const url = URL.createObjectURL(blob);
+
+    audioElement.setAttribute('src', url);
+};
+
+/**
+ * Start recording.
+ */
+const startRecording = () => {
+    recorder.start();
+};
+
+/**
+ * Stop recording.
+ */
+const stopRecording = () => {
+    recorder.stop();
+};
+
+
+// Wait until everything has loaded
+(function() {
+    audioElement = document.querySelector('.js-audio');
+    startButton = document.querySelector('.js-start');
+    stopButton = document.querySelector('.js-stop');
+    
+    // We'll get the user's audio input here.
+    navigator.mediaDevices.getUserMedia({
+        audio: true // We are only interested in the audio
+    }).then(stream => {
+        // Create a new MediaRecorder instance, and provide the audio-stream.
+        recorder = new MediaRecorder(stream);
+
+        // Set the recorder's eventhandlers
+        recorder.ondataavailable = saveChunkToRecording;
+        recorder.onstop = saveRecording;
+    });
+
+    // Add event listeners to the start and stop button
+    startButton.addEventListener('mouseup', startRecording);
+    stopButton.addEventListener('mouseup', stopRecording);
+})();
+</script>
+</html>
