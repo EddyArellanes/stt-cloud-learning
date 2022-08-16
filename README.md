@@ -8,6 +8,11 @@
 
 # Getting Started
 
-Download extension *Live Server* in VSCode to launch index.html 
+Run
+```bash
+npm run start:dev
+```
+to launch index.html and go to http://localhost:3000/*
+
 The Snippet about how to Get Permission of Mic and Start/Stop was taken from:
-[https://codepen.io/Sambego/pen/ZBPbbR](CodePen)
+[CodePen](https://codepen.io/Sambego/pen/ZBPbbR)
