@@ -16,3 +16,6 @@ to launch index.html and go to http://localhost:3000/*
 
 The Snippet about how to Get Permission of Mic and Start/Stop was taken from:
 [CodePen](https://codepen.io/Sambego/pen/ZBPbbR)
+
+The Approach about how to send in correct way the BLOB to Backend was taken from here:
+[Fetch API upload file](https://openjavascript.info/2022/06/08/how-to-upload-a-file-using-the-fetch-api/)

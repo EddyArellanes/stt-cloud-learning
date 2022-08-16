@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>stt-cloud-learning</title>
     <style>
       body {
         background: #ffffff;
@@ -60,13 +60,14 @@
     <div class="toolbar">
       <button class="js-start button button--start">Start</button>
       <button class="js-stop button button--stop">Stop</button>
+      <button class="js-send button button--send">Send Audio</button>
     </div>
   </div>
 </body>
 <script>
   // We'll save all chunks of audio in this array.
 const chunks = [];
-
+let blob = null;
 // We will set this to our MediaRecorder instance later.
 let recorder = null;
 
@@ -88,7 +89,7 @@ const saveChunkToRecording = (event) => {
  * @return {[type]}       [description]
  */
 const saveRecording = () => {
-    const blob = new Blob(chunks, {
+    blob = new Blob(chunks, {
         type: 'audio/mp4; codecs=opus'
     });
     const url = URL.createObjectURL(blob);
@@ -110,12 +111,25 @@ const stopRecording = () => {
     recorder.stop();
 };
 
-
+const sendRecord = () => {
+  const formData = new FormData();
+  formData.append('file', blob);
+  console.info(formData);
+  fetch('/records', {
+    method: 'post',
+    body: formData
+}).then( (response) =>{
+  console.info('Response from the Backend', response);
+}).catch(err => {
+    alert(err);
+  });
+}
 // Wait until everything has loaded
 (function() {
     audioElement = document.querySelector('.js-audio');
     startButton = document.querySelector('.js-start');
     stopButton = document.querySelector('.js-stop');
+    sendButton = document.querySelector('.js-send');
     
     // We'll get the user's audio input here.
     navigator.mediaDevices.getUserMedia({
@@ -132,6 +146,7 @@ const stopRecording = () => {
     // Add event listeners to the start and stop button
     startButton.addEventListener('mouseup', startRecording);
     stopButton.addEventListener('mouseup', stopRecording);
+    sendButton.addEventListener('click', sendRecord);
 })();
 </script>
 </html>
