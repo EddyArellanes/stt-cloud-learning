@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import * as speech from '@google-cloud/speech';
 @Injectable()
 export class RecordsService {
   convertSTTGoogle() {
     try {
-      console.log('TODO LIST');
+      const client = new speech.SpeechClient();
+      console.log('GCloud Client', client);
     } catch (err) {}
   }
 }
