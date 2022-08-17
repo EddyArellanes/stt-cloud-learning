@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 export class RecordsService {
   convertSTTGoogle() {
     try {
-      console.log('TODO');
+      console.log('TODO LIST');
     } catch (err) {}
   }
 }
