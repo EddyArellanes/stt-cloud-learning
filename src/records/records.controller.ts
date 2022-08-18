@@ -1,3 +1,4 @@
+import { RecordsService } from './records.service';
 import {
   Controller,
   Get,
@@ -19,6 +20,7 @@ interface AudioRecord {
 }
 @Controller('records')
 export class RecordsController {
+  constructor(private recordService: RecordsService) {}
   @Get()
   async getRecords(): Promise<any> {
     try {
@@ -38,8 +40,9 @@ export class RecordsController {
     try {
       console.info('REQ', body);
       console.info('DATA received', file);
+      const laWea = this.recordService.convertSTTGoogle(file);
       return {
-        body,
+        laWea,
         file: file.buffer.toString(),
       };
     } catch (error) {
