@@ -39,3 +39,43 @@ And you should be the api enabled:
 Also Remember the prices
 Free Tier: Till 60 minutes/month
 Level 1: USD 0.024/Minute
+
+## Create ServiceAccount and get a JSON Credential
+![API Cloud](docs/images/GCloudAccountService.jpg)
+
+To Test locally, export as Variable:
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS=/home/eddyalien/webpage-9a255-c6e8df3d5c82.json
+```
+
+For this Test I have tested with 'es-MX' language.
+The response of the API is the following:
+```json
+{
+   "results":[
+      {
+         "alternatives":[
+            {
+               "words":[
+                  
+               ],
+               "transcript":"Okay vamos a probar esto no tiene más de 5 segundos",
+               "confidence":0.9308170676231384
+            }
+         ],
+         "channelTag":0,
+         "resultEndTime":{
+            "seconds":"5",
+            "nanos":50000000
+         },
+         "languageCode":"es-us"
+      }
+   ],
+   "totalBilledTime":{
+      "seconds":"15",
+      "nanos":0
+   }
+}
+```
+
+> As I can see, minimum Billing GCloud takes is *15 seconds* yet if the audio is 5, for example.
