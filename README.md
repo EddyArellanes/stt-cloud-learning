@@ -79,3 +79,10 @@ The response of the API is the following:
 ```
 
 > As I can see, minimum Billing GCloud takes is *15 seconds* yet if the audio is 5, for example.
+
+Finally, Google Cloud Documentation is a little bit spreat for many places.
+Most useful to fix my issues was here:
+[google.cloud.speech.v1](https://cloud.google.com/speech-to-text/docs/reference/rpc/google.cloud.speech.v1#google.cloud.speech.v1.StreamingRecognitionConfig)
+
+And a little introduction but useful
+[Converting speech to text with Node.js](https://youtu.be/naZ8oEKuR44)
